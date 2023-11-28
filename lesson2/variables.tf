@@ -28,19 +28,20 @@ variable "common_tags" {
   type        = map
   default = {
     Project     = "Internal_Project"
-    Environment = "development"
+    Environment = "Production"
   }
 }
 
 ####
 
-
 variable "rds_instance_type" {
   description = "Enter Instance Type"
   type        = string
-  default     = "db.t3.micro"
+  default     = "db.t2.micro"
 }
 
+# variable "database_master_password" {}
+
 variable "passname" {
-  default = "nanada"
+  default = "nanadaa"
 }
