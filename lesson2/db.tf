@@ -22,7 +22,6 @@ resource "aws_security_group" "database_1" {
   }
 }
 
-
 // Generate Password
 resource "random_string" "rds_password" {
   length           = 12
@@ -40,27 +39,11 @@ resource "aws_ssm_parameter" "rds_password" {
   description = "Master Password for RDS MySQL"
   type        = "SecureString"
   value       = random_string.rds_password.result
+# value       = var.database_master_password
 }
 
 // Get Password from SSM Parameter Store
   data "aws_ssm_parameter" "rds_password" {
   name       = "/prod/mariadb"
   depends_on = [aws_ssm_parameter.rds_password]
-}
-
-
-
-####### Database RDS Server
-resource "aws_db_instance" "db" {
-    engine = "mariadb"
-    engine_version = "10.6.7"
-    instance_class = var.rds_instance_type
-    db_name           = "appmariadb"
-    identifier = "appmariadb"
-    username = "webapp"
-    password = "data.aws_ssm_parameter.rds_password.value"
-    vpc_security_group_ids = [aws_security_group.database_1.id]
-    skip_final_snapshot = true
-    allocated_storage = 50
-    max_allocated_storage = 1000
 }
