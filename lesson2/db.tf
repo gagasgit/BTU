@@ -53,7 +53,7 @@ resource "aws_ssm_parameter" "rds_password" {
 ####### Database RDS Server
 resource "aws_db_instance" "db" {
     engine = "mariadb"
-    engine_version = "10.6.7"
+    engine_version = "10.4.28"
     instance_class = var.rds_instance_type
     db_name           = "appmariadb"
     identifier = "appmariadb"
